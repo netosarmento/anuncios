@@ -9,8 +9,8 @@
         {% include 'base/css.html' %}
         {% block base_head %}{% endblock base_head %}
     </head>
-    <body>
-        {% include 'base/navbar.html' %}
+    <body> <---! Loja virtual esta de exemplo->
+        {% include 'base/navbar.html' with nome_da_marca='Loja virtual' %}
         {% block content %} {% endblock %}
         {% include 'base/js.html' %}
     </body>

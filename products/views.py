@@ -1,6 +1,8 @@
 from django.http import Http404
+
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render, get_object_or_404
+
 from .models import Product
 
 class ProductFeaturedListView(ListView):
@@ -14,9 +16,9 @@ class ProductFeaturedDetailView(DetailView):
     queryset = Product.objects.all().featured()
     template_name = "products/featured-detail.html"
 
-# Class Based View
+#Class Based View
 class ProductListView(ListView):
-    # Traz todos os produtos do banco de dados sem filtrar nada 
+    #traz todos os produtos do banco de dados sem filtrar nada 
     queryset = Product.objects.all()
     template_name = "products/list.html"
 
@@ -25,7 +27,7 @@ class ProductListView(ListView):
     #     print(context)
     #     return context
 
-# Function Based View
+#Function Based View
 def product_list_view(request):
     queryset = Product.objects.all()
     context = {
@@ -39,16 +41,17 @@ class ProductDetailSlugView(DetailView):
 
     def get_object(self, *args, **kwargs):
         slug = self.kwargs.get('slug')
+        #instance = get_object_or_404(Product, slug = slug, active = True)
         try:
-            instance = Product.objects.get(slug=slug, active=True)
+            instance = Product.objects.get(slug = slug, active = True)
         except Product.DoesNotExist:
             raise Http404("Não encontrado!")
         except Product.MultipleObjectsReturned:
-            qs = Product.objects.filter(slug=slug, active=True)
-            instance = qs.first()
+            qs = Product.objects.filter(slug = slug, active = True)
+            instance =  qs.first()
         return instance
 
-# Class Based View
+#Class Based View
 class ProductDetailView(DetailView):
     template_name = "products/detail.html"
 
@@ -64,8 +67,8 @@ class ProductDetailView(DetailView):
             raise Http404("Esse produto não existe!")
         return instance
 
-# Function Based View
-def product_detail_view(request, pk=None, *args, **kwargs):
+#Function Based View
+def product_detail_view(request, pk = None, *args, **kwargs):
     instance = Product.objects.get_by_id(pk)
     print(instance)
     if instance is None:
@@ -74,4 +77,4 @@ def product_detail_view(request, pk=None, *args, **kwargs):
     context = {
         'object': instance
     }
-    return render(request, "products/detail.html", context)
+    return render(request, "products/detail.html", context)       
