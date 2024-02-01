@@ -77,4 +77,5 @@ def product_detail_view(request, pk = None, *args, **kwargs):
     context = {
         'object': instance
     }
-    return render(request, "products/detail.html", context)       
+    return render(request, "products/detail.html", context)
+           
